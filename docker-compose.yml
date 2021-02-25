@@ -7,16 +7,13 @@ services:
     ports:
       - 80:80
     volumes:
-      - ${NEXTCLOUD_ROOT}/data:/srv/nextcloud/data
-      - ${NEXTCLOUD_ROOT}/data/html:/var/www/html
-      - ${NEXTCLOUD_ROOT}/data/config:/var/www/html/config
-      - ${NEXTCLOUD_ROOT}/data/apps:/var/www/html/custom_apps
-      - ${NEXTCLOUD_ROOT}/data/data:/var/www/html/data
-      - ${NEXTCLOUD_ROOT}/data/themes:/var/www/html/themes
-      - /etc/localtime:/etc/localtime:ro
+      - nextcloud:/var/www/html
     depends_on:
       - mariadb
     environment:
+      - HTTP_PROXY=${HTTP_PROXY}
+      - HTTPS_PROXY=${HTTPS_PROXY}
+      - NO_PROXY=${NO_PROXY}
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -28,7 +25,7 @@ services:
     container_name: nextcloud-mariadb
     restart: unless-stopped
     volumes:
-      - ${NEXTCLOUD_ROOT}/data/mariadb:/var/lib/mysql
+      - mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -41,4 +38,12 @@ services:
     ports:
       - 9980:9980
     environment:
+      - HTTP_PROXY=${HTTP_PROXY}
+      - HTTPS_PROXY=${HTTPS_PROXY}
+      - NO_PROXY=${NO_PROXY}
       - extra_params=--o:ssl.enable=false
+volumes:
+  nextcloud:
+    external: true
+  mysql:
+    external: true
