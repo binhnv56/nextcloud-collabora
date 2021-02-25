@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  nextcloud:
+    image: nextcloud
+    container_name: nextcloud
+    ports:
+      - 80:80
+    volumes:
+      - ${NEXTCLOUD_ROOT}/data:/srv/nextcloud/data
+      - ${NEXTCLOUD_ROOT}/data/html:/var/www/html
+      - ${NEXTCLOUD_ROOT}/data/config:/var/www/html/config
+      - ${NEXTCLOUD_ROOT}/data/apps:/var/www/html/custom_apps
+      - ${NEXTCLOUD_ROOT}/data/data:/var/www/html/data
+      - ${NEXTCLOUD_ROOT}/data/themes:/var/www/html/themes
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - mariadb
+    environment:
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOST=nextcloud-mariadb
+    restart: unless-stopped
+
+  mariadb:
+    image: mariadb
+    container_name: nextcloud-mariadb
+    restart: unless-stopped
+    volumes:
+      - ${NEXTCLOUD_ROOT}/data/mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+
+  collabora:
+    image: collabora/code
+    container_name: nextcloud-collabora
+    ports:
+      - 9980:9980
+    environment:
+      - extra_params=--o:ssl.enable=false
