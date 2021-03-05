@@ -11,39 +11,48 @@ services:
     depends_on:
       - mariadb
     environment:
-      - HTTP_PROXY=${HTTP_PROXY}
-      - HTTPS_PROXY=${HTTPS_PROXY}
-      - NO_PROXY=${NO_PROXY}
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_HOST=nextcloud-mariadb
-    restart: unless-stopped
+    env_file:
+      - env
+    networks:
+      - nextcloud-nextwork
+    restart: always
 
   mariadb:
     image: mariadb
     container_name: nextcloud-mariadb
-    restart: unless-stopped
     volumes:
       - mysql:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
+    env_file:
+      - env
+    networks:
+      - nextcloud-nextwork
+    restart: always
 
   collabora:
     image: collabora/code
     container_name: nextcloud-collabora
+    volumes:
+      - collabora:/etc/loolwsd
     ports:
       - 9980:9980
     environment:
-      - HTTP_PROXY=${HTTP_PROXY}
-      - HTTPS_PROXY=${HTTPS_PROXY}
-      - NO_PROXY=${NO_PROXY}
+      - username=admin
+      - password=admin
       - extra_params=--o:ssl.enable=false --o:ssl.termination=false
+    env_file:
+      - env
+    networks:
+      - nextcloud-nextwork
+    restart: always
+
 volumes:
   nextcloud:
     external: true
   mysql:
     external: true
+  collabora:
+    external: true
+
+networks:
+  nextcloud-nextwork:

@@ -20,6 +20,11 @@
     Nginx
     $ sudo apt-get install apache2
     $ sudo systemctl start apache2
+    Fix max file siz upload via nginx. Edit /etc/nginx/nginx.conf
+    http {
+        ...
+        client_max_body_size 20M;
+    }
     ```
 
 * Step 4: Enable proxy Apache 2 modules
