@@ -18,16 +18,16 @@
 
     ```
     Nginx
-    $ sudo apt-get install apache2
-    $ sudo systemctl start apache2
+    $ sudo apt-get install nginx
     Fix max file siz upload via nginx. Edit /etc/nginx/nginx.conf
     http {
         ...
         client_max_body_size 20M;
     }
+    $ sudo systemctl start nginx
     ```
 
-* Step 4: Enable proxy Apache 2 modules
+* Step 4: Enable proxy Apache 2 modules and Firewall
     ```
     Apache
     $ sudo a2enmod proxy
@@ -64,6 +64,9 @@
 
 * Step 6: Run docker compose 
     ```
+    docker volume create nextcloud
+    docker volume create collabora
+    docker volume create mariadb
     docker-compose up -d
     ```
 * Step 7: Nextcloud setup

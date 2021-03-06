@@ -22,7 +22,7 @@ services:
     image: mariadb
     container_name: nextcloud-mariadb
     volumes:
-      - mysql:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     env_file:
       - env
     networks:
@@ -49,7 +49,7 @@ services:
 volumes:
   nextcloud:
     external: true
-  mysql:
+  mariadb:
     external: true
   collabora:
     external: true
