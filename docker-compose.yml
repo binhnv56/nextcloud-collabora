@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   nextcloud:
-    image: nextcloud
+    image: binhnv56/nextcloud:v21.0.0-vi
     container_name: nextcloud
     ports:
       - 8080:80
@@ -14,6 +14,7 @@ services:
       - MYSQL_HOST=nextcloud-mariadb
     env_file:
       - env
+    # - proxy
     networks:
       - nextcloud-nextwork
     restart: always
@@ -32,14 +33,12 @@ services:
   collabora:
     image: collabora/code
     container_name: nextcloud-collabora
-    volumes:
-      - collabora:/etc/loolwsd
     ports:
       - 9980:9980
     environment:
       - username=admin
       - password=admin
-      - extra_params=--o:ssl.enable=false --o:ssl.termination=false
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=false # without ssl
     env_file:
       - env
     networks:
@@ -50,8 +49,6 @@ volumes:
   nextcloud:
     external: true
   mariadb:
-    external: true
-  collabora:
     external: true
 
 networks:
