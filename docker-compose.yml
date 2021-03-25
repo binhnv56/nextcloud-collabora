@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   nextcloud:
-    image: binhnv56/nextcloud:v21.0.0-vi
+    image: binhnv56/nextcloud
     container_name: nextcloud
     ports:
       - 8080:80
@@ -13,8 +13,9 @@ services:
     environment:
       - MYSQL_HOST=nextcloud-mariadb
     env_file:
-      - env
-    # - proxy
+      - env/web.env
+      - env/db.env
+    # - env/proxy.env
     networks:
       - nextcloud-nextwork
     restart: always
@@ -25,7 +26,7 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
     env_file:
-      - env
+      - env/db.env
     networks:
       - nextcloud-nextwork
     restart: always
@@ -39,17 +40,13 @@ services:
       - username=admin
       - password=admin
       - extra_params=--o:ssl.enable=false --o:ssl.termination=false # without ssl
-    env_file:
-      - env
     networks:
       - nextcloud-nextwork
     restart: always
 
 volumes:
   nextcloud:
-    external: true
   mariadb:
-    external: true
 
 networks:
   nextcloud-nextwork:

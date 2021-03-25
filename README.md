@@ -22,7 +22,7 @@
     Fix max file siz upload via nginx. Edit /etc/nginx/nginx.conf
     http {
         ...
-        client_max_body_size 20M;
+        client_max_body_size 500M;
     }
     $ sudo systemctl start nginx
     ```
@@ -46,7 +46,7 @@
     To integrate collabora with nextcloud we need use domain for both.
     Change the domain config in nextcloud_collabora.conf. After that move this file to directory of apache
 
-    $ sudo cp -r nextcloud_collabora.conf /etc/apache2/sites-available/
+    $ sudo cp -r apache/nextcloud_collabora.conf /etc/apache2/sites-available/
     $ sudo a2ensite nextcloud_collabora.conf
     $ sudo systemctl reload apache2
     ```
@@ -55,19 +55,16 @@
     To integrate collabora with nextcloud we need use domain for both.
     Change the domain config in nextcloud_collabora.conf. After that move this file to directory of apache
 
-    $ sudo cp -r nextcloud_collabora_nginx.conf /etc/nginx/sites-available
+    $ sudo cp -r nginx/nextcloud_collabora_nginx.conf /etc/nginx/sites-available
     $ cd /etc/nginx/sites-enabled
-    $ ln -s /etc/nginx/sites-available/nextcloud_collabora_nginx.conf nextcloud_collabora_nginx.conf
+    $ sudo ln -s /etc/nginx/sites-available/nextcloud_collabora_nginx.conf nextcloud_collabora_nginx.conf
     $ sudo systemctl reload nginx
     $ sudo systemctl restart nginx
     ```
 
 * Step 6: Run docker compose 
     ```
-    docker volume create nextcloud
-    docker volume create collabora
-    docker volume create mariadb
-    docker-compose up -d
+    sudo docker-compose up -d
     ```
 * Step 7: Nextcloud setup
     ```
@@ -75,6 +72,11 @@
     Example: http://app.domain.local
     ```
 
+* Step 8: Change Nextcloud theme
+    ```
+    cd themes
+    ./set_theme.sh
+    ```
 
 ## Refer
     ```
