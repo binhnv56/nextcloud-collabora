@@ -37,9 +37,11 @@ services:
     ports:
       - 9980:9980
     environment:
+      - domain=vworkspace.cloud
       - username=admin
       - password=admin
-      - extra_params=--o:ssl.enable=false --o:ssl.termination=false # without ssl
+    # - extra_params=--o:user_interface.mode=classic
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=false --o:user_interface.mode=classic # without ssl
     networks:
       - nextcloud-nextwork
     restart: always
