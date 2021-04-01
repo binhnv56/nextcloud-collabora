@@ -1,0 +1,57 @@
+#nextcloud {
+    padding-left: 136px;
+}
+
+#body-settings #header,
+#body-public #header {
+	background-color: #2383e7 !important;
+	background-image: linear-gradient(40deg, #2383e7 0%, #2383e7 100%) !important;
+}
+
+#header .logo-icon {
+	width: 100px;
+}
+
+#appmenu li a.active::before,
+#appmenu li:hover a::before,
+#appmenu li:hover a.active::before,
+#appmenu li a:focus::before {
+	display: none !important;
+}
+
+.section.development-notice {
+	display: none !important;
+}
+
+#appmenu:hover li span {
+    bottom: -2px !important;
+    font-size: 14px;
+}
+
+#appmenu:hover li span {
+	opacity: 0 !important;
+}
+
+#appmenu li:first-child span {
+    left: -20px !important;
+}
+
+#appmenu li:hover a + span,
+#appmenu li a:focus + span,
+#appmenu li:hover span,
+#appmenu li:focus span,
+#appmenu li a:focus span {
+	opacity: 1 !important;
+}
+
+#body-login input.primary,
+#body-login #alternative-logins li a {
+	background-color: transparent !important;
+}
+#theming-preview-logo, #header .logo {
+	background-image: url(../img/logo-viettel.png) !important;
+}
+#app-dashboard, #body-login {
+	background-image: url(../img/envelope-blue.jpg) !important;
+	background-size: cover !important;
+}
