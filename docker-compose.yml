@@ -17,7 +17,7 @@ services:
       - env/db.env
     # - env/proxy.env
     networks:
-      - nextcloud-nextwork
+      - nextcloud-network
     restart: always
 
   mariadb:
@@ -28,22 +28,33 @@ services:
     env_file:
       - env/db.env
     networks:
-      - nextcloud-nextwork
+      - nextcloud-network
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: nextcloud-phpmyadmin
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: nextcloud-mariadb
+    networks:
+      - nextcloud-network
     restart: always
 
   collabora:
-    image: collabora/code
+    image: binhnv56/collabora
     container_name: nextcloud-collabora
     ports:
       - 9980:9980
     environment:
-      - domain=vworkspace.cloud
+      - domain=habeco.vworkspace.cloud
       - username=admin
       - password=admin
     # - extra_params=--o:user_interface.mode=classic
       - extra_params=--o:ssl.enable=false --o:ssl.termination=false --o:user_interface.mode=classic # without ssl
     networks:
-      - nextcloud-nextwork
+      - nextcloud-network
     restart: always
 
 volumes:
@@ -51,4 +62,5 @@ volumes:
   mariadb:
 
 networks:
-  nextcloud-nextwork:
+  nextcloud-network:
+     external: true
