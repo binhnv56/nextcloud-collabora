@@ -55,3 +55,6 @@
 	background-image: url(../img/envelope-blue.jpg) !important;
 	background-size: cover !important;
 }
+p.info {
+	display:none !important;
+}
