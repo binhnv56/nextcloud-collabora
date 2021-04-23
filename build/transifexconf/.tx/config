@@ -2,6 +2,13 @@
 host = https://www.transifex.com
 lang_map = bg_BG: bg, cs_CZ: cs, fi_FI: fi, hu_HU: hu, nb_NO: nb, sk_SK: sk, th_TH: th, ja_JP: ja
 
+[vts_vworkspace_quicknotes.quicknotes]
+file_filter = translationfiles/<lang>/quicknotes.po
+minimum_perc = 0
+source_file = translationfiles/templates/quicknotes.pot
+source_lang = en
+type = PO
+
 [nextcloud.richdocuments]
 file_filter = translationfiles/<lang>/richdocuments.po
 source_file = translationfiles/templates/richdocuments.pot
